@@ -1,5 +1,5 @@
 [README.md](https://github.com/user-attachments/files/22521914/README.md)
-![Main Screen](screenshot.png)
+![Main Screen](AorticRoot.png)
 
 # Aortic Root App – Bulbus & Sinotubular Junction  
 
