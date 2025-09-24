@@ -1,4 +1,6 @@
 [README.md](https://github.com/user-attachments/files/22521914/README.md)
+![Main Screen](screenshot.png)
+
 # Aortic Root App – Bulbus & Sinotubular Junction  
 
 A Python GUI application (Tkinter) designed to calculate and evaluate the diameters of the aortic root (**Bulbus** and **Sinotubular Junction**) based on **Body Surface Area (BSA)** and the patient’s age group.  
