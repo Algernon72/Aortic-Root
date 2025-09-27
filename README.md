@@ -3,7 +3,7 @@
 
 Added Lightweight, responsive HTML version of the “Aortic Root (Bulb & STJ)” app. Calculates BSA, expected aortic diameters, Aortic Ratio and percentage deviations. Features mobile portrait layout, touch-friendly controls, results copy function,
 
-![Main Screen](Aortic.png)
+![Main Screen](aortic.png)
 
 # Aortic Root App – Bulbus & Sinotubular Junction  
 
