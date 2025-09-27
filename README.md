@@ -1,6 +1,10 @@
 [README.md](https://github.com/user-attachments/files/22521914/README.md)
 ![Main Screen](AorticRoot.png)
 
+Added Lightweight, responsive HTML version of the “Aortic Root (Bulb & STJ)” app. Calculates BSA, expected aortic diameters, Aortic Ratio and percentage deviations. Features mobile portrait layout, touch-friendly controls, results copy function,
+
+![Main Screen](Aortic.png)
+
 # Aortic Root App – Bulbus & Sinotubular Junction  
 
 A Python GUI application (Tkinter) designed to calculate and evaluate the diameters of the aortic root (**Bulbus** and **Sinotubular Junction**) based on **Body Surface Area (BSA)** and the patient’s age group.  
