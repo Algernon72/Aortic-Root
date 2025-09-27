@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aortic Root (Bulbo & GST) – Danilo Savioni 2025</title>
+  <style>
+    :root{
+      --bg:#f8fafc; --card:#ffffff; --muted:#64748b; --text:#0f172a; --accent:#0ea5e9;
+      --pill-ok-bg:#e8f7ee; --pill-ok-fg:#1e7c43; --pill-warn-bg:#fff4e5; --pill-warn-fg:#a15c00;
+      --pill-neutral-bg:#eef1f5; --pill-neutral-fg:#2c3e50; --pill-bad-bg:#fdecea; --pill-bad-fg:#a12622;
+      --green:#b9f7b9; --green-active:#a4eea4; --orange:#ffd6a5; --orange-active:#ffcc8a; --blue:#d6e0ff; --blue-active:#bccdff;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; font-family:system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", sans-serif; background:var(--bg); color:var(--text)}
+    .container{max-width:1100px; margin:0 auto; padding:16px}
+    header{display:flex; align-items:center; justify-content:space-between; gap:12px; background:var(--bg)}
+    h1{font-size:1.35rem; font-weight:600; margin:0}
+    .pill{padding:6px 12px; border:1px solid #d0d7e2; border-radius:999px; font-weight:700; font-size:.95rem; display:inline-block}
+    .pill.ok{background:var(--pill-ok-bg); color:var(--pill-ok-fg)}
+    .pill.warn{background:var(--pill-warn-bg); color:var(--pill-warn-fg)}
+    .pill.bad{background:var(--pill-bad-bg); color:var(--pill-bad-fg)}
+    .pill.neutral{background:var(--pill-neutral-bg); color:var(--pill-neutral-fg)}
+
+    .content{display:grid; grid-template-columns:320px 1fr; gap:16px; margin-top:12px}
+    @media (max-width: 860px){ .content{grid-template-columns:1fr} }
+
+    .card{background:var(--card); border-radius:14px; box-shadow:0 1px 2px rgba(0,0,0,.05); padding:14px}
+    .inputs label{display:block; font-size:.95rem; margin:6px 0 2px}
+    .inputs input{width:100%; padding:10px 12px; border:1px solid #e5e7eb; border-radius:10px; font-size:1rem}
+
+    .btn-row{display:grid; grid-template-columns:1fr auto auto auto 1fr; gap:10px; align-items:center; margin-top:10px}
+    .btn{border:none; border-radius:12px; padding:10px 14px; font-weight:700; cursor:pointer}
+    .btn:active{transform:translateY(1px)}
+    .btn.green{background:var(--green)}
+    .btn.green:hover{background:var(--green-active)}
+    .btn.orange{background:var(--orange)}
+    .btn.orange:hover{background:var(--orange-active)}
+    .btn.blue{background:var(--blue)}
+    .btn.blue:hover{background:var(--blue-active)}
+    .btn.copy{width:100%; margin-top:10px; background:#eef6ff;}
+
+    .summary{font-size:1rem; margin:4px 0 10px; color:#111827}
+
+    table{width:100%; border-collapse:separate; border-spacing:0 8px}
+    thead th{font-weight:700; font-size:.95rem; color:#111827; text-align:left; padding:8px 10px}
+    tbody tr{background:#fff}
+    tbody td{padding:10px; border-top:1px solid #e5e7eb; border-bottom:1px solid #e5e7eb}
+    tbody td:first-child{border-left:1px solid #e5e7eb; border-top-left-radius:10px; border-bottom-left-radius:10px}
+    tbody td:last-child{border-right:1px solid #e5e7eb; border-top-right-radius:10px; border-bottom-right-radius:10px}
+
+    .footer{margin-top:10px; font-size:.98rem; color:#0f172a}
+    .muted{color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Aortic Root (Bulbo & GST) – Danilo Savioni 2025</h1>
+      <span id="pill" class="pill neutral">Inserisci i dati…</span>
+    </header>
+
+    <section class="content">
+      <div class="card inputs">
+        <label for="peso">Peso (kg):</label>
+        <input id="peso" type="text" inputmode="decimal" placeholder="es. 72,5" />
+
+        <label for="altezza">Altezza (cm):</label>
+        <input id="altezza" type="text" inputmode="decimal" placeholder="es. 178" />
+
+        <label for="dob">Data di nascita (gg/mm/aaaa):</label>
+        <input id="dob" type="text" placeholder="es. 14/09/1972" />
+
+        <label for="bulbo">Diametro misurato Bulbo (cm):</label>
+        <input id="bulbo" type="text" inputmode="decimal" placeholder="es. 3,45" />
+
+        <label for="gst">Diametro misurato GST (cm):</label>
+        <input id="gst" type="text" inputmode="decimal" placeholder="es. 2,90" />
+
+        <div class="btn-row">
+          <span></span>
+          <button class="btn green" id="btnCalcola">Calcola</button>
+          <button class="btn orange" id="btnReset">Reset</button>
+          <button class="btn blue" id="btnCrediti">Crediti</button>
+          <span></span>
+        </div>
+        <button class="btn copy" id="btnCopy">Copia risultati</button>
+      </div>
+
+      <div class="card">
+        <div id="summary" class="summary">BSA: – m² | Fascia età: –</div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:190px">Sito</th>
+                <th style="width:180px; text-align:center">Misurazione attesa (cm)</th>
+                <th style="width:140px; text-align:center">Misurato (cm)</th>
+                <th style="width:110px; text-align:center">Aortic Ratio</th>
+                <th style="width:110px; text-align:center">Δ%</th>
+              </tr>
+            </thead>
+            <tbody id="tbody">
+              <!-- rows injected here -->
+            </tbody>
+          </table>
+        </div>
+        <div id="footer" class="footer"></div>
+      </div>
+    </section>
+  </div>
+
+  <dialog id="creditsDlg">
+    <p><strong>Crediti</strong></p>
+    <p>Programmato con passione da Danilo Savioni e Stella IA<br/>In un piovoso pomeriggio di settembre del 2025.</p>
+    <form method="dialog"><button class="btn" style="margin-top:8px">Chiudi</button></form>
+  </dialog>
+
+  <script>
+    // ===== Helpers =====
+    function parseFloatSmart(s){
+      if(s==null) return null;
+      s = String(s).trim().replace(',', '.');
+      if(!s) return null;
+      const v = Number(s);
+      return Number.isFinite(v) ? v : null;
+    }
+    function fmt(x, nd=2, suffix=""){ return (x==null||!Number.isFinite(x))? '—' : x.toFixed(nd)+suffix; }
+
+    function parseDob(s){
+      s = (s||'').trim();
+      if(!s) return null;
+      const tryParse = (parts, order)=>{
+        const [a,b,c] = parts.map(Number);
+        let d,m,y;
+        if(order==='DMY'){ d=a; m=b-1; y=c; }
+        else { y=a; m=b-1; d=c; }
+        const dt = new Date(y, m, d);
+        return (dt && dt.getFullYear()===y && dt.getMonth()===m && dt.getDate()===d) ? dt : null;
+      };
+      if(/^\d{2}\/\d{2}\/\d{4}$/.test(s)){
+        const p = s.split('/');
+        return tryParse(p,'DMY');
+      }
+      if(/^\d{4}-\d{2}-\d{2}$/.test(s)){
+        const p = s.split('-');
+        return tryParse(p,'YMD');
+      }
+      return null;
+    }
+    function yearsFromDob(d){
+      const today = new Date();
+      const ms = today - d; // milliseconds
+      return ms / (1000*60*60*24*365.2425);
+    }
+    function pickAgeBand(age){
+      if(age < 18) return '<18 anni';
+      if(age <= 40) return '18–40 anni';
+      return '>40 anni';
+    }
+    function bsaMosteller(weightKg, heightCm){
+      return Math.sqrt((weightKg * heightCm) / 3600.0);
+    }
+    function expectedBulb(bsa, band){
+      if(band === '<18 anni') return 1.02 + (0.98 * bsa);
+      if(band === '18–40 anni') return 0.97 + (1.12 * bsa);
+      return 1.92 + (0.74 * bsa); // >40
+    }
+    function expectedGST(bsa, band){
+      if(band === '<18 anni') return 0.87 + (0.80 * bsa);
+      if(band === '18–40 anni') return 1.06 + (0.82 * bsa);
+      return 1.69 + (0.62 * bsa); // >40
+    }
+
+    // ===== UI wiring =====
+    const el = {
+      peso: document.getElementById('peso'),
+      altezza: document.getElementById('altezza'),
+      dob: document.getElementById('dob'),
+      bulbo: document.getElementById('bulbo'),
+      gst: document.getElementById('gst'),
+      pill: document.getElementById('pill'),
+      btnCalcola: document.getElementById('btnCalcola'),
+      btnReset: document.getElementById('btnReset'),
+      btnCrediti: document.getElementById('btnCrediti'),
+      btnCopy: document.getElementById('btnCopy'),
+      tbody: document.getElementById('tbody'),
+      summary: document.getElementById('summary'),
+      footer: document.getElementById('footer'),
+      dlg: document.getElementById('creditsDlg')
+    };
+
+    function setPill(text, kind='neutral'){
+      el.pill.textContent = text;
+      el.pill.className = 'pill ' + kind;
+    }
+
+    function clearTable(){ el.tbody.innerHTML = ''; }
+
+    function addRow(site, expected, measured, ratio, devpct){
+      const tr = document.createElement('tr');
+      const cells = [site, fmt(expected,2), fmt(measured,2), fmt(ratio,3), fmt(devpct,1,'%')];
+      cells.forEach((txt,i)=>{
+        const td = document.createElement('td');
+        if(i>0) td.style.textAlign = 'center';
+        td.textContent = txt;
+        tr.appendChild(td);
+      });
+      el.tbody.appendChild(tr);
+    }
+
+    function recompute(){
+      const w = parseFloatSmart(el.peso.value);
+      const h = parseFloatSmart(el.altezza.value);
+      const dob = parseDob(el.dob.value);
+
+      if(!(w>0) || !(h>0)){
+        setPill('Inserisci peso e altezza validi', 'neutral');
+        return;
+      }
+      if(!dob){
+        setPill('Inserisci una data di nascita valida', 'neutral');
+        return;
+      }
+
+      const age = yearsFromDob(dob);
+      const band = pickAgeBand(age);
+      const bsa = bsaMosteller(w,h);
+
+      const expBulb = expectedBulb(bsa, band);
+      const expGST = expectedGST(bsa, band);
+
+      const mBulb = parseFloatSmart(el.bulbo.value);
+      const mGST  = parseFloatSmart(el.gst.value);
+
+      const ratioBulb = (mBulb!=null && expBulb) ? (mBulb/expBulb) : null;
+      const ratioGST  = (mGST!=null && expGST) ? (mGST/expGST) : null;
+
+      const devBulb = (ratioBulb!=null) ? (ratioBulb - 1.0) * 100.0 : null;
+      const devGST  = (ratioGST!=null) ? (ratioGST - 1.0) * 100.0 : null;
+
+      el.summary.textContent = `BSA: ${fmt(bsa,3)} m² | Fascia età auto-selezionata: ${band} (età: ${fmt(age,1)} anni)`;
+
+      clearTable();
+      addRow('Bulbo', expBulb, mBulb, ratioBulb, devBulb);
+      addRow('Giunzione SinuTubulare', expGST, mGST, ratioGST, devGST);
+
+      let pillTxt = 'Calcolo completato', pillKind = 'ok';
+      if(mBulb==null && mGST==null){ pillTxt='Inserisci i diametri misurati (cm)'; pillKind='neutral'; }
+      else{
+        const flags=[];
+        if(ratioBulb!=null){ if(ratioBulb>1.1) flags.push('Bulbo > atteso'); else if(ratioBulb<0.9) flags.push('Bulbo < atteso'); }
+        if(ratioGST!=null){ if(ratioGST>1.1) flags.push('GST > atteso'); else if(ratioGST<0.9) flags.push('GST < atteso'); }
+        if(flags.length){ pillTxt = flags.join(' | '); pillKind = 'warn'; }
+      }
+      setPill(pillTxt, pillKind);
+
+      let footer = `BSA: ${fmt(bsa,3)} m² | Fascia età: ${band} | Bulbo atteso: ${fmt(expBulb,2)} cm | GST atteso: ${fmt(expGST,2)} cm`;
+      if(mBulb!=null) footer += ` | Bulbo misurato: ${fmt(mBulb,2)} cm (Ratio ${fmt(ratioBulb,3)}, Δ% ${fmt(devBulb,1)}%)`;
+      if(mGST!=null)  footer += ` | GST misurato: ${fmt(mGST,2)} cm (Ratio ${fmt(ratioGST,3)}, Δ% ${fmt(devGST,1)}%)`;
+      el.footer.textContent = footer;
+    }
+
+    function resetFields(){
+      ['peso','altezza','dob','bulbo','gst'].forEach(id=> el[id].value='');
+      setPill('Inserisci i dati…','neutral');
+      document.getElementById('summary').textContent = 'BSA: – m² | Fascia età: –';
+      clearTable();
+      document.getElementById('footer').textContent = '';
+    }
+
+    function copyResults(){
+      const txt = document.getElementById('footer').textContent || 'Nessun risultato da copiare.';
+      navigator.clipboard.writeText(txt).then(()=>{
+        alert('Risultati copiati negli appunti.');
+      },()=>{
+        // fallback
+        const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+        alert('Risultati copiati negli appunti.');
+      });
+    }
+
+    // Events
+    el.btnCalcola.addEventListener('click', recompute);
+    el.btnReset.addEventListener('click', resetFields);
+    el.btnCrediti.addEventListener('click', ()=> el.dlg.showModal());
+    el.btnCopy.addEventListener('click', copyResults);
+
+    // Enter key triggers recompute
+    ['peso','altezza','dob','bulbo','gst'].forEach(id=>{
+      document.getElementById(id).addEventListener('keydown', e=>{ if(e.key==='Enter'){ recompute(); } });
+    })
+  </script>
+</body>
+</html>
